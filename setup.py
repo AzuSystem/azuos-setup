@@ -12,6 +12,11 @@ class Api:
 	def test_func(self):
 		print("bruh")
 
+	def try_desktop(self):
+		subprocess.Popen(['bash', '/usr/share/azuos/start.sh'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		webview.windows[0].destroy()
+		# exit()
+
 root = tk.Tk()
 
 displayWidth = root.winfo_screenwidth()
@@ -22,14 +27,14 @@ print('Starting AzuOS Installer...')
 # Instantiate Api class
 api = Api()
 
-webview.settings = {
-	'ALLOW_FILE_URLS': True,
-	'ALLOW_DOWNLOADS': True,
-	'OPEN_DEVTOOLS_IN_DEBUG': False
-}
+# webview.settings = {
+# 	'ALLOW_FILE_URLS': True,
+# 	'ALLOW_DOWNLOADS': True,
+# 	'OPEN_DEVTOOLS_IN_DEBUG': False
+# }
 
-# webview.create_window('AzuOS Installer', url="index.html", background_color='#000000', js_api=api, fullscreen=True, width=displayWidth, height=displayHeight)
+webview.create_window('AzuOS Installer', url="index.html", background_color='#000000', js_api=api, fullscreen=True, width=displayWidth, height=displayHeight)
 
-webview.create_window('AzuOS Installer', url="index.html", background_color='#000000', js_api=api, width=1280, height=720)
+# webview.create_window('AzuOS Installer', url="index.html", background_color='#000000', js_api=api, width=1280, height=720)
 
-webview.start(gui='qt', debug=True)
+webview.start(gui='qt')
