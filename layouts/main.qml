@@ -36,6 +36,22 @@ ApplicationWindow {
             horizontalOffset: 0
             verticalOffset: 12
         }
+
+        Image {
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 75
+            source: "../assets/logo.png"
+            width: 164
+            height: 150
+        }
+
+
+        Text {
+            text: "Welcome to AzuOS"
+            anchors.centerIn: parent
+            color: "white"
+            font.pixelSize: 24
+        }
     }
 
     FastBlur {
@@ -44,12 +60,5 @@ ApplicationWindow {
         radius: 60
         transparentBorder: false
         z: -5
-    }
-
-    Text {
-        text: "Welcome to AzuOS"
-        anchors.centerIn: parent
-        color: "white"
-        font.pixelSize: 24
     }
 }
