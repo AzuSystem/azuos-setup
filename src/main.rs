@@ -18,7 +18,7 @@ fn main() {
             .with_window(
                 WindowConfig::new(app)
                     .with_title("AzuOS Installer")
-                    .with_window_attributes(move |attributes, el| {
+                    .with_window_attributes(move |attributes, _el| {
                         attributes.with_fullscreen(Some(Fullscreen::Borderless(None)))
                     }),
             )
@@ -47,7 +47,7 @@ fn app() -> impl IntoElement {
                     .max_height(Size::px(720.0))
                     // .height(Size::percent(70.0))
                     // .height(Size::fill_minimum())
-                    
+                    .scale(0.8)
                     .background((13, 5, 20, 0.8))
                     .corner_radius(7.0)
                     .spacing(8.0)
