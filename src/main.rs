@@ -3,7 +3,11 @@
     windows_subsystem = "windows"
 )]
 
-use freya::prelude::*;
+use freya::{
+    animation::*,
+    prelude::*,
+};
+
 use freya::winit::window::Fullscreen;
 
 fn main() {
@@ -26,6 +30,23 @@ fn main() {
 }
 
 fn app() -> impl IntoElement {
+    let mut hovering_installbtn = use_state(|| false);
+    let mut hovering_livebtn = use_state(|| false);
+
+    let mut btn_anim_installbtn = use_animation(|_| {
+        AnimNum::new(1.0, 1.05)
+            .function(Function::Quad)
+            .ease(Ease::Out)
+            .time(500)
+    });
+
+    let mut btn_anim_livebtn = use_animation(|_| {
+        AnimNum::new(1.0, 1.05)
+            .function(Function::Quad)
+            .ease(Ease::Out)
+            .time(500)
+    });
+    
     // Declare the *UI*
     rect()
         .width(Size::fill())
@@ -92,13 +113,22 @@ fn app() -> impl IntoElement {
                                 rect()
                                     .width(Size::px(194.0))
                                     .height(Size::fill())
-                                    .background((13, 5, 20, 30))
+                                    // .background((13, 5, 20, 30))
+                                    .background(if !*hovering_installbtn.read() {
+                                        (13, 5, 20, 30)
+                                    } else { 
+                                        (255, 255, 255, 20)    
+                                    })
+                                    // .scale(if !*hovering.read() {1.0} else {1.2})
+                                    .scale(btn_anim_installbtn.read().value())
                                     .corner_radius(7.0)
                                     .border(Border::new().alignment(BorderAlignment::Outer).fill((255, 255, 255, 0.2)).width(1.0))
                                     .shadow(Shadow::new().y(12.0).blur(35.0).color((0, 0, 0, 0.4)))
                                     .blur(10.0)
                                     .center()
                                     .spacing(1.5)
+                                    .on_pointer_enter(move |_| { hovering_installbtn.set(true); btn_anim_installbtn.start(); })
+                                    .on_pointer_leave(move |_| { hovering_installbtn.set(false); btn_anim_installbtn.reverse(); })
                                     .child(
                                         // svg(("download", include_bytes!("assets/icons/download.svg")))
                                         svg(include_bytes!("assets/icons/download.svg"))
@@ -132,13 +162,20 @@ fn app() -> impl IntoElement {
                                 rect()
                                     .width(Size::px(194.0))
                                     .height(Size::fill())
-                                    .background((13, 5, 20, 30))
+                                    .background(if !*hovering_livebtn.read() {
+                                        (13, 5, 20, 30)
+                                    } else { 
+                                        (255, 255, 255, 20)    
+                                    })
+                                    .scale(btn_anim_livebtn.read().value())
                                     .corner_radius(7.0)
                                     .border(Border::new().alignment(BorderAlignment::Outer).fill((255, 255, 255, 0.2)).width(1.0))
                                     .shadow(Shadow::new().y(12.0).blur(35.0).color((0, 0, 0, 0.4)))
                                     .blur(10.0)
                                     .center()
                                     .spacing(1.5)
+                                    .on_pointer_enter(move |_| { hovering_livebtn.set(true); btn_anim_livebtn.start(); })
+                                    .on_pointer_leave(move |_| { hovering_livebtn.set(false); btn_anim_livebtn.reverse(); })
                                     .child(
                                         // svg(("download", include_bytes!("assets/icons/download.svg")))
                                         svg(include_bytes!("assets/icons/usb.svg"))
