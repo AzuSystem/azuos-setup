@@ -23,7 +23,7 @@ jobs:
     - name: Setup Build Environment
       run: |
         apt update
-        apt install -y rustup
+        apt install -y rustup clang
         rustup default stable
     
     - name: Build
