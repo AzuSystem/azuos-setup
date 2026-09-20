@@ -1,0 +1,36 @@
+name: Compile Setup Binary
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    container:
+      image: debian:trixie
+      options: --privileged
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Build Environment
+      run: |
+        apt update
+        apt install -y rustup
+        rustup default stable
+    
+    - name: Build
+      run: cargo build --verbose --release
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: azuos-setup
+        path: target/release/azuos-setup
