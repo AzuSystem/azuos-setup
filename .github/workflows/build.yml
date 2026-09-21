@@ -23,7 +23,17 @@ jobs:
     - name: Setup Build Environment
       run: |
         apt update
-        apt install -y rustup clang curl
+        apt install -y \
+          rustup \
+          clang \
+          curl \
+          pkg-config \
+          libfreetype-dev \
+          libfontconfig-dev \
+          libegl-dev \
+          libgl-dev \
+          libgles-dev \
+          libwayland-dev
         rustup default stable
     
     - name: Build
